@@ -2,7 +2,26 @@
 #include <iostream>
 
 
-class Node
+// Implement a Node interface with "pure" virtual functions/methods (i.e., abstract methods), which are implemented by 
+// assigning them to 0. Interfaces / abstract classes define pure virtual methods that must be implemented by the 
+// subclasses, otherwise a compile error is thrown.
+class INode
+{
+
+public:
+
+    INode() = default;
+    virtual ~INode() = default;
+    virtual void updateName(const std::string& newName) = 0;
+
+    // If uncommented, a compile error will be thrown since no subclasses implement these pure virtual methods.
+    // virtual void pureVirutalMethod0() = 0;
+    // virtual void pureVirutalMethod1() = 0;
+
+};
+
+
+class Node : public INode
 {
 
 public: 
@@ -50,7 +69,9 @@ public:
         child = newChild;
     }
 
-    void updateName(const std::string& newName)
+
+    // Use the "override" keyword when overwriting a virtual function's/method's definition
+    void updateName(const std::string& newName) override
     {
         std::cout << "Calling updateName in Parent" << std::endl;
         name = newName;
@@ -71,13 +92,13 @@ public:
     {
         name = newName;
     }
-    
+     
     void setParent(const Node& newParent)
     {
         parent = newParent;
     }
 
-    void updateName(const std::string& newName)
+    void updateName(const std::string& newName) override
     {
         std::cout << "Calling updateName in Child" << std::endl;
         name = newName;
